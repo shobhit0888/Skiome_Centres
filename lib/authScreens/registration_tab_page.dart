@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skiome_centres/global/global.dart';
+import 'package:skiome_centres/splashScreen/my_splash_screen.dart';
 import '../category_Screens/home_screen.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/loading_dialog.dart';
@@ -49,7 +50,9 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
         if (nameTextEditingController.text.isNotEmpty &&
             emailTextEditingController.text.isNotEmpty &&
             passwordTextEditingController.text.isNotEmpty &&
-            confirmPasswordTextEditingController.text.isNotEmpty&&phoneTextEditingController.text.isNotEmpty&&locationTextEditingController.text.isNotEmpty) {
+            confirmPasswordTextEditingController.text.isNotEmpty &&
+            phoneTextEditingController.text.isNotEmpty &&
+            locationTextEditingController.text.isNotEmpty) {
           showDialog(
               context: context,
               builder: (c) {
@@ -105,19 +108,15 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
 
   saveInfoToFirestoreAndLocally(User currentUser) async {
     //save to firestore
-    FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(currentUser.uid)
-        .set({
+    FirebaseFirestore.instance.collection("Centres").doc(currentUser.uid).set({
       "uid": currentUser.uid,
       "email": currentUser.email,
       "name": nameTextEditingController.text.trim(),
       "photoUrl": dowmloadUrlImage,
-      "phone":phoneTextEditingController.text.trim(),
-      "address":locationTextEditingController.text.trim(),
+      "phone": phoneTextEditingController.text.trim(),
+      "address": locationTextEditingController.text.trim(),
       "status": "approved",
-      "earnings":0.0,
-      
+      "earnings": 0.0,
     });
     //save Locally
     sharedPreferences = await SharedPreferences.getInstance();
@@ -126,7 +125,6 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
     await sharedPreferences!
         .setString("name", nameTextEditingController.text.trim());
     await sharedPreferences!.setString("photoUrl", dowmloadUrlImage);
-    
   }
 
   @override
@@ -225,8 +223,10 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                         horizontal: 50, vertical: 12)),
                 onPressed: (() {
                   formvalidation();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => HomeScreen())));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => MySplashScreen())));
                 }),
                 child: const Text(
                   "SignUp",

@@ -1,9 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skiome_centres/objectsScreens/objects_screen.dart';
 import 'package:skiome_centres/models/categories.dart';
+import 'package:skiome_centres/splashScreen/my_splash_screen.dart';
+
+import '../global/global.dart';
 
 class CategoriesUiDesignWidget extends StatefulWidget {
   Categories? model;
@@ -19,6 +24,18 @@ class CategoriesUiDesignWidget extends StatefulWidget {
 }
 
 class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
+  deleteCategory(String categoryId) {
+    FirebaseFirestore.instance
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
+        .collection("ObjectCategories")
+        .doc(categoryId)
+        .delete();
+    Fluttertoast.showToast(msg: "Category Deleted.");
+    Navigator.push(
+        context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,7 +78,9 @@ class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
                       ),
                     ),
                     IconButton(
-                        onPressed: (() {}),
+                        onPressed: (() {
+                          deleteCategory(widget.model!.categoryId.toString());
+                        }),
                         icon: Icon(
                           Icons.delete_sweep,
                           color: Colors.pinkAccent,

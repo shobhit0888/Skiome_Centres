@@ -21,6 +21,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  getCentreEarningsFromDatabase() {
+    FirebaseFirestore.instance
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
+        .get()
+        .then((dataSnapshot) {
+      previousEarnings = dataSnapshot.data()!["earnings"].toString();
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCentreEarningsFromDatabase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //show categories
                 return SliverStaggeredGrid.countBuilder(
                   crossAxisCount: 1,
-                  staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                  staggeredTileBuilder: (c) => const StaggeredTile.fit(1),
                   itemBuilder: (context, index) {
                     Categories categoriesModel = Categories.fromJson(
                       dataSnapshot.data.docs[index].data()

@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:skiome_centres/category_Screens/home_screen.dart';
+import 'package:skiome_centres/earningsScreens/earnings_screen.dart';
 import 'package:skiome_centres/global/global.dart';
+import 'package:skiome_centres/historyScreens/history_Screen.dart';
+import 'package:skiome_centres/ordersScreens/orders_screen.dart';
+import 'package:skiome_centres/shiftedParcelsScreens/shifted_parcels_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../splashScreen/my_splash_screen.dart';
@@ -66,7 +71,27 @@ class _MyDrawerState extends State<MyDrawer> {
                     color: Colors.grey,
                   ),
                   title: "Home".text.color(Colors.grey).make(),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => HomeScreen()));
+                  },
+                ),
+                const Divider(
+                  height: 10,
+                  color: Colors.grey,
+                  thickness: 2,
+                ),
+                //earnings
+                ListTile(
+                  leading: const Icon(
+                    Icons.monetization_on,
+                    color: Colors.grey,
+                  ),
+                  title: "Earnings".text.color(Colors.grey).make(),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => EarningsScreen()));
+                  },
                 ),
                 const Divider(
                   height: 10,
@@ -79,8 +104,11 @@ class _MyDrawerState extends State<MyDrawer> {
                     Icons.reorder,
                     color: Colors.grey,
                   ),
-                  title: "My Orders".text.color(Colors.grey).make(),
-                  onTap: () {},
+                  title: "New Orders".text.color(Colors.grey).make(),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => OrdersScreen()));
+                  },
                 ),
                 const Divider(
                   height: 10,
@@ -93,9 +121,13 @@ class _MyDrawerState extends State<MyDrawer> {
                     Icons.picture_in_picture_rounded,
                     color: Colors.grey,
                   ),
-                  title:
-                      "Not yet received orders".text.color(Colors.grey).make(),
-                  onTap: () {},
+                  title: "Shifted Orders".text.color(Colors.grey).make(),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => ShiftedParcelsScreen()));
+                  },
                 ),
                 const Divider(
                   height: 10,
@@ -109,27 +141,17 @@ class _MyDrawerState extends State<MyDrawer> {
                     color: Colors.grey,
                   ),
                   title: "History".text.color(Colors.grey).make(),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => HistoryScreen()));
+                  },
                 ),
                 const Divider(
                   height: 10,
                   color: Colors.grey,
                   thickness: 2,
                 ),
-                //search
-                ListTile(
-                  leading: const Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                  ),
-                  title: "Search".text.color(Colors.grey).make(),
-                  onTap: () {},
-                ),
-                const Divider(
-                  height: 10,
-                  color: Colors.grey,
-                  thickness: 2,
-                ),
+
                 //logout
                 ListTile(
                   leading: const Icon(
