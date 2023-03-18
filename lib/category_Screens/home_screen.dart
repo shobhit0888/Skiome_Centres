@@ -1,5 +1,6 @@
 // import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,12 @@ import 'package:skiome_centres/category_Screens/categories_ui_design_widget.dart
 import 'package:skiome_centres/category_Screens/upload_category_screen.dart';
 import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/models/categories.dart';
+import 'package:skiome_centres/pushNotifications/push_notifications_system.dart';
 import 'package:skiome_centres/widgets/text_delegate_header_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../functions/functions.dart';
+import '../splashScreen/my_splash_screen.dart';
 import '../widgets/my_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,6 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
         .get()
         .then((dataSnapshot) {
       previousEarnings = dataSnapshot.data()!["earnings"].toString();
+    }).whenComplete(() {
+      restrictBlockedCentresFromUsingCentresApp();
+    });
+  }
+
+  restrictBlockedCentresFromUsingCentresApp() async {
+    await FirebaseFirestore.instance
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
+        .get()
+        .then((snapshot) {
+      if (snapshot.data()!["status"] != "approved") {
+        showReusableSnackBar(context, "you are blocked by admin.");
+        showReusableSnackBar(context, "contact admin:  admin2@ishop.com");
+        FirebaseAuth.instance.signOut();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+      }
     });
   }
 
@@ -35,6 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    PushNotificationsSystem pushNotificationsSystem = PushNotificationsSystem();
+    pushNotificationsSystem.whenNotificationReceived(context);
+    pushNotificationsSystem.generateDeviceRecognitionToken();
     getCentreEarningsFromDatabase();
   }
 
