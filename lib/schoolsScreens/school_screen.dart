@@ -6,23 +6,23 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/models/objects.dart';
+import 'package:skiome_centres/models/schools.dart';
 import 'package:skiome_centres/objectsScreens/objects_ui_design_widget.dart';
 import 'package:skiome_centres/objectsScreens/upload_objects_screen.dart';
 import 'package:skiome_centres/models/categories.dart';
+import 'package:skiome_centres/schoolsScreens/registration_tab_page.dart';
+import 'package:skiome_centres/schoolsScreens/school_ui_design_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../widgets/text_delegate_header_widget.dart';
 
-class ObjectsScreen extends StatefulWidget {
-  Categories? model;
-  ObjectsScreen({
-    this.model,
-  });
+class SchoolsScreen extends StatefulWidget {
+  
   @override
-  State<ObjectsScreen> createState() => _ItemsScreenState();
+  State<SchoolsScreen> createState() => _SchoolsScreenState();
 }
 
-class _ItemsScreenState extends State<ObjectsScreen> {
+class _SchoolsScreenState extends State<SchoolsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,9 +48,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => UploadObjectsScreens(
-                              model: widget.model,
-                            ))));
+                        builder: ((context) => SchoolsRegistrationTabPage())));
               },
               icon: Icon(
                 Icons.add_box_rounded,
@@ -62,7 +60,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
         slivers: [
           SliverPersistentHeader(
               delegate: TextDelegateHeaderWidget(
-            title: widget.model!.categoryName.toString() + " Objects",
+            title: "Associated Schools",
           )),
 
           //1. query
@@ -70,27 +68,24 @@ class _ItemsScreenState extends State<ObjectsScreen> {
           //3. ui design widget
           StreamBuilder(
             stream: FirebaseFirestore.instance
-                // .collection("Centres")
-                // .doc(sharedPreferences!.getString("uid"))
-                .collection("ObjectCategories")
-                .doc(widget.model!.categoryId)
-                .collection("Objects")
-                .orderBy("publishDate", descending: true)
+                .collection("Centres")
+                .doc(sharedPreferences!.getString("uid"))
+                .collection("UsersSchools")
                 .snapshots(),
             builder: (context, AsyncSnapshot dataSnapshot) {
               if (dataSnapshot.hasData) //if categoies exist
               {
                 //show categories
                 return SliverStaggeredGrid.countBuilder(
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   staggeredTileBuilder: (c) => const StaggeredTile.fit(1),
                   itemBuilder: (context, index) {
-                    Objects objectsModel = Objects.fromJson(
+                    Schools schoolsModel = Schools.fromJson(
                       dataSnapshot.data.docs[index].data()
                           as Map<String, dynamic>,
                     );
-                    return ObjectsUiDesignWidget(
-                      model: objectsModel,
+                    return SchoolsUiDesignWidget(
+                      model: schoolsModel,
                       context: context,
                     );
                   },
@@ -100,7 +95,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
                 //if category does not exist
                 return const SliverToBoxAdapter(
                   child: Center(
-                    child: Text("No Objects exists"),
+                    child: Text("No Categories exists"),
                   ),
                 );
               }

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,32 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/splashScreen/my_splash_screen.dart';
+
 import '../category_Screens/home_screen.dart';
+import '../global/global.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/loading_dialog.dart';
 
-class RegistrationTabPage extends StatefulWidget {
-  const RegistrationTabPage({super.key});
+class SchoolsRegistrationTabPage extends StatefulWidget {
+  const SchoolsRegistrationTabPage({super.key});
 
   @override
-  State<RegistrationTabPage> createState() => _RegistrationTabPageState();
+  State<SchoolsRegistrationTabPage> createState() =>
+      _SchoolsRegistrationTabPageState();
 }
 
-class _RegistrationTabPageState extends State<RegistrationTabPage> {
+class _SchoolsRegistrationTabPageState
+    extends State<SchoolsRegistrationTabPage> {
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   TextEditingController confirmPasswordTextEditingController =
       TextEditingController();
-  TextEditingController phoneTextEditingController = TextEditingController();
-  // TextEditingController centreCodeTextEditingController =
-  //     TextEditingController();
   TextEditingController cityCodeTextEditingController = TextEditingController();
-  TextEditingController locationTextEditingController = TextEditingController();
+  TextEditingController schoolAddressTextEditingController =
+      TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String downloadUrlImage = "";
+  String dowmloadUrlImage = "";
   XFile? imgXFile;
   final ImagePicker imagePicker = ImagePicker();
   getImageFromGallery() async {
@@ -53,8 +55,6 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
             emailTextEditingController.text.isNotEmpty &&
             passwordTextEditingController.text.isNotEmpty &&
             confirmPasswordTextEditingController.text.isNotEmpty &&
-            phoneTextEditingController.text.isNotEmpty &&
-            locationTextEditingController.text.isNotEmpty &&
             cityCodeTextEditingController.text.isNotEmpty) {
           showDialog(
               context: context,
@@ -67,14 +67,14 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
           String fileName = DateTime.now().millisecondsSinceEpoch.toString();
           fstorage.Reference storageRef = fstorage.FirebaseStorage.instance
               .ref()
-              .child("centresImage")
+              .child("usersImage")
               .child(fileName);
           fstorage.UploadTask uploadImageTask =
               storageRef.putFile(File(imgXFile!.path));
           fstorage.TaskSnapshot taskSnapshot =
               await uploadImageTask.whenComplete(() {});
           await taskSnapshot.ref.getDownloadURL().then((urlImage) {
-            downloadUrlImage = urlImage;
+            dowmloadUrlImage = urlImage;
           });
           //save user info to firestore database
           saveInformationToDatabase();
@@ -111,24 +111,46 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
 
   saveInfoToFirestoreAndLocally(User currentUser) async {
     //save to firestore
-    FirebaseFirestore.instance.collection("Centres").doc(currentUser.uid).set({
-      "uid": currentUser.uid,
-      "email": currentUser.email,
-      "name": nameTextEditingController.text.trim(),
-      "photoUrl": downloadUrlImage,
-      "phone": phoneTextEditingController.text.trim(),
-      "cityCode": cityCodeTextEditingController.text.trim(),
-      "address": locationTextEditingController.text.trim(),
+    FirebaseFirestore.instance
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
+        .collection("UsersSchools")
+        .doc(currentUser.uid)
+        .set({
+      "schoolUID": currentUser.uid,
+      "schoolEmail": currentUser.email,
+      "schoolName": nameTextEditingController.text.trim(),
+      "photoUrl": dowmloadUrlImage,
+      "centreUID": sharedPreferences!.getString("uid"),
+      "ciyCode": cityCodeTextEditingController.text.trim(),
+      "schoolAddress": schoolAddressTextEditingController.text.trim(),
       "status": "approved",
-      "earnings": 0.0,
+      "userCart": ["initialValue"],
+    }).then((value) {
+      FirebaseFirestore.instance
+          .collection("UsersSchools")
+          .doc(currentUser.uid)
+          .set({
+        "schoolUID": currentUser.uid,
+        "schoolEmail": currentUser.email,
+        "schoolName": nameTextEditingController.text.trim(),
+        "photoUrl": dowmloadUrlImage,
+        "centreUID": sharedPreferences!.getString("uid"),
+        "ciyCode": cityCodeTextEditingController.text.trim(),
+        "schoolAddress": schoolAddressTextEditingController.text.trim(),
+        "status": "approved",
+        "userCart": ["initialValue"],
+      });
     });
+
     //save Locally
-    sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences!.setString("uid", currentUser.uid);
-    await sharedPreferences!.setString("email", currentUser.email!);
-    await sharedPreferences!
-        .setString("name", nameTextEditingController.text.trim());
-    await sharedPreferences!.setString("photoUrl", downloadUrlImage);
+    // sharedPreferences = await SharedPreferences.getInstance();
+    // await sharedPreferences!.setString("uid", currentUser.uid);
+    // await sharedPreferences!.setString("email", currentUser.email!);
+    // await sharedPreferences!
+    //     .setString("name", nameTextEditingController.text.trim());
+    // await sharedPreferences!.setString("photoUrl", dowmloadUrlImage);
+    // await sharedPreferences!.setStringList("userCart", ["initialValue"]);
   }
 
   @override
@@ -150,20 +172,9 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
           )),
         ),
         title: Text(
-          "New Centre Registration",
+          "New School Registration",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => HomeScreen())));
-              },
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ))
-        ],
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -182,9 +193,10 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 12,
+                  height: 40,
                 ),
                 //get-capture image
                 GestureDetector(
@@ -208,6 +220,9 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                         : null,
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 //inputs field
 
                 Form(
@@ -229,6 +244,21 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                       isObscure: false,
                       enabled: true,
                     ),
+                    CustomTextField(
+                      textEditingController: cityCodeTextEditingController,
+                      iconData: Icons.email,
+                      hintText: "City Code",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //School Address
+                    CustomTextField(
+                      textEditingController: schoolAddressTextEditingController,
+                      iconData: Icons.location_city,
+                      hintText: "School Address",
+                      isObscure: false,
+                      enabled: true,
+                    ),
                     //password
                     CustomTextField(
                       textEditingController: passwordTextEditingController,
@@ -244,38 +274,6 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                       iconData: Icons.lock,
                       hintText: "Confirm Password",
                       isObscure: true,
-                      enabled: true,
-                    ),
-                    //phone
-                    CustomTextField(
-                      textEditingController: phoneTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "Phone No.",
-                      isObscure: false,
-                      enabled: true,
-                    ),
-                    //centreCode
-                    // CustomTextField(
-                    //   textEditingController: centreCodeTextEditingController,
-                    //   iconData: Icons.lock,
-                    //   hintText: "Centre Code",
-                    //   isObscure: false,
-                    //   enabled: true,
-                    // ),
-                    //cityCode
-                    CustomTextField(
-                      textEditingController: cityCodeTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "City Code",
-                      isObscure: false,
-                      enabled: true,
-                    ),
-                    //location
-                    CustomTextField(
-                      textEditingController: locationTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "Location",
-                      isObscure: false,
                       enabled: true,
                     ),
                     const SizedBox(
@@ -303,7 +301,7 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                           color: Colors.white),
                     )),
                 const SizedBox(
-                  height: 30,
+                  height: 120,
                 ),
               ],
             ),

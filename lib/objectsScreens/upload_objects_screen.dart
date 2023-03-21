@@ -38,8 +38,8 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
   String objectUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
   saveObjectCategoryInfo() {
     FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
+        // .collection("Centres")
+        // .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(widget.model!.categoryId)
         .collection("Objects")
@@ -47,8 +47,8 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
         .set({
       "objectId": objectUniqueId,
       "categoryId": widget.model!.categoryId.toString(),
-      "centreUID": sharedPreferences!.getString("uid"),
-      "centreName": sharedPreferences!.getString("name"),
+      // "centreUID": sharedPreferences!.getString("uid"),
+      // "centreName": sharedPreferences!.getString("name"),
       "objectInfo": objectInfoTextEditingController.text.trim(),
       "objectName": objectNameTextEditingController.text.trim(),
       "longDescription": objectDescriptionTextEditingController.text.trim(),
@@ -60,8 +60,8 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
       FirebaseFirestore.instance.collection("Objects").doc(objectUniqueId).set({
         "objectId": objectUniqueId,
         "categoryId": widget.model!.categoryId.toString(),
-        "centreUID": sharedPreferences!.getString("uid"),
-        "centreName": sharedPreferences!.getString("name"),
+        // "centreUID": sharedPreferences!.getString("uid"),
+        // "centreName": sharedPreferences!.getString("name"),
         "objectInfo": objectInfoTextEditingController.text.trim(),
         "objectName": objectNameTextEditingController.text.trim(),
         "longDescription": objectDescriptionTextEditingController.text.trim(),

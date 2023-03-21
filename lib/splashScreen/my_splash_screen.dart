@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 
 import '../authScreens/auth_screen.dart';
 import '../category_Screens/home_screen.dart';
@@ -19,8 +20,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
     Timer(const Duration(seconds: 2), () {
       //user is already logged in
       if (FirebaseAuth.instance.currentUser != null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (c) => const HomeScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (c) => const HomeScreenForCentre()));
       }
       //user is not logged in
       else {

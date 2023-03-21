@@ -22,8 +22,8 @@ class ObjectsDetailsScreen extends StatefulWidget {
 class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
   deleteObject() {
     FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
+        // .collection("Centres")
+        // .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(widget.model!.categoryId)
         .collection("Objects")
@@ -70,52 +70,54 @@ class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
         ),
         backgroundColor: Colors.pinkAccent,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(widget.model!.thumbnailUrl.toString()),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 10.0),
-            child: Text(
-              widget.model!.objectName.toString(),
-              textAlign: TextAlign.justify,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.pinkAccent),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-            child: Text(
-              widget.model!.longDescription.toString(),
-              textAlign: TextAlign.justify,
-              style: const TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 15,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(widget.model!.thumbnailUrl.toString()),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+              child: Text(
+                widget.model!.objectName.toString(),
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.pinkAccent),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              widget.model!.objectPrice.toString() + " Rs.",
-              textAlign: TextAlign.justify,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.pinkAccent),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Text(
+                widget.model!.longDescription.toString(),
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 15,
+                ),
+              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 8.0, right: 300.0),
-            child: Divider(
-              height: 1,
-              thickness: 2,
-              color: Colors.pinkAccent,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                widget.model!.objectPrice.toString() + " Rs.",
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.pinkAccent),
+              ),
             ),
-          )
-        ],
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0, right: 300.0),
+              child: Divider(
+                height: 1,
+                thickness: 2,
+                color: Colors.pinkAccent,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

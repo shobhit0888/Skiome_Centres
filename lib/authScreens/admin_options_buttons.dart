@@ -1,19 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:skiome_centres/authScreens/admin_verification.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:skiome_centres/authScreens/registration_tab_page.dart';
+import 'package:skiome_centres/category_Screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'login_tab_page.dart';
-
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+class AdminOptionsButtons extends StatefulWidget {
+  const AdminOptionsButtons({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<AdminOptionsButtons> createState() => _AdminOptionsButtonsState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AdminOptionsButtonsState extends State<AdminOptionsButtons> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,14 +39,14 @@ class _AuthScreenState extends State<AuthScreen> {
                 indicatorWeight: 4,
                 tabs: [
                   Tab(
-                    text: "login",
+                    text: "Global Categories",
                     icon: Icon(
                       Icons.lock,
                       color: Colors.white,
                     ),
                   ),
                   Tab(
-                    text: "Registration",
+                    text: "Centre Registration",
                     icon: Icon(
                       Icons.person,
                       color: Colors.white,
@@ -68,8 +67,8 @@ class _AuthScreenState extends State<AuthScreen> {
               tileMode: TileMode.clamp,
             )),
             child: TabBarView(children: [
-              LoginTabPage(),
-              AdminLoginScreen(),
+              HomeScreen(),
+              RegistrationTabPage(),
             ]),
           ),
         ));

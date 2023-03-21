@@ -30,13 +30,13 @@ class _UploadCategoryScreensState extends State<UploadCategoryScreens> {
   String categoryUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
   saveObjectCategoryInfo() {
     FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
+        // .collection("Centres")
+        // .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(categoryUniqueId)
         .set({
       "categoryId": categoryUniqueId,
-      "centreUID": sharedPreferences!.getString("uid"),
+      // "centreUID": sharedPreferences!.getString("uid"),
       "categoryInfo": categoryInfoTextEditingController.text.trim(),
       "categoryName": categoryNameTextEditingController.text.trim(),
       "publishDate": DateTime.now(),

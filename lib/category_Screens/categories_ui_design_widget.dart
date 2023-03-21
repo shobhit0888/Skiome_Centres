@@ -26,8 +26,8 @@ class CategoriesUiDesignWidget extends StatefulWidget {
 class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
   deleteCategory(String categoryId) {
     FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
+        // .collection("Centres")
+        // .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(categoryId)
         .delete();

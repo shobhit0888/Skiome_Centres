@@ -10,6 +10,7 @@ import 'package:skiome_centres/category_Screens/upload_category_screen.dart';
 import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/models/categories.dart';
 import 'package:skiome_centres/pushNotifications/push_notifications_system.dart';
+import 'package:skiome_centres/schoolsScreens/registration_tab_page.dart';
 import 'package:skiome_centres/widgets/text_delegate_header_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -25,48 +26,48 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  getCentreEarningsFromDatabase() {
-    FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
-        .get()
-        .then((dataSnapshot) {
-      previousEarnings = dataSnapshot.data()!["earnings"].toString();
-    }).whenComplete(() {
-      restrictBlockedCentresFromUsingCentresApp();
-    });
-  }
+  // getCentreEarningsFromDatabase() {
+  //   FirebaseFirestore.instance
+  //       .collection("Centres")
+  //       .doc(sharedPreferences!.getString("uid"))
+  //       .get()
+  //       .then((dataSnapshot) {
+  //     previousEarnings = dataSnapshot.data()!["earnings"].toString();
+  //   }).whenComplete(() {
+  //     restrictBlockedCentresFromUsingCentresApp();
+  //   });
+  // }
 
-  restrictBlockedCentresFromUsingCentresApp() async {
-    await FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
-        .get()
-        .then((snapshot) {
-      if (snapshot.data()!["status"] != "approved") {
-        showReusableSnackBar(context, "you are blocked by admin.");
-        showReusableSnackBar(context, "contact admin:  admin2@ishop.com");
-        FirebaseAuth.instance.signOut();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (c) => MySplashScreen()));
-      }
-    });
-  }
+  // restrictBlockedCentresFromUsingCentresApp() async {
+  //   await FirebaseFirestore.instance
+  //       .collection("Centres")
+  //       .doc(sharedPreferences!.getString("uid"))
+  //       .get()
+  //       .then((snapshot) {
+  //     if (snapshot.data()!["status"] != "approved") {
+  //       showReusableSnackBar(context, "you are blocked by admin.");
+  //       showReusableSnackBar(context, "contact admin:  admin2@ishop.com");
+  //       FirebaseAuth.instance.signOut();
+  //       Navigator.push(
+  //           context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+  //     }
+  //   });
+  // }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    PushNotificationsSystem pushNotificationsSystem = PushNotificationsSystem();
-    pushNotificationsSystem.whenNotificationReceived(context);
-    pushNotificationsSystem.generateDeviceRecognitionToken();
-    getCentreEarningsFromDatabase();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   PushNotificationsSystem pushNotificationsSystem = PushNotificationsSystem();
+  //   pushNotificationsSystem.whenNotificationReceived(context);
+  //   pushNotificationsSystem.generateDeviceRecognitionToken();
+  //   getCentreEarningsFromDatabase();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -103,13 +104,14 @@ class _HomeScreenState extends State<HomeScreen> {
               delegate: TextDelegateHeaderWidget(
             title: "Categories",
           )),
+
           //write   query
           //model
           //design widget
           StreamBuilder(
             stream: FirebaseFirestore.instance
-                .collection("Centres")
-                .doc(sharedPreferences!.getString("uid"))
+                // .collection("Centres")
+                // .doc(sharedPreferences!.getString("uid"))
                 .collection("ObjectCategories")
                 .orderBy("publishDate", descending: true)
                 .snapshots(),
@@ -118,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
               {
                 //show categories
                 return SliverStaggeredGrid.countBuilder(
-                  crossAxisCount: 1,
+                  crossAxisCount: 2,
                   staggeredTileBuilder: (c) => const StaggeredTile.fit(1),
                   itemBuilder: (context, index) {
                     Categories categoriesModel = Categories.fromJson(
