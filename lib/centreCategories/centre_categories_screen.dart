@@ -18,18 +18,19 @@ import 'package:velocity_x/velocity_x.dart';
 import '../functions/functions.dart';
 import '../splashScreen/my_splash_screen.dart';
 import '../widgets/my_drawer.dart';
+import 'centre_categories_ui_design_widget.dart';
 
-class GlobalCategoriesScreen extends StatefulWidget {
+class CentreCategoriesScreen extends StatefulWidget {
   Categories? model;
-  GlobalCategoriesScreen({
+  CentreCategoriesScreen({
     Key? key,
     this.model,
   }) : super(key: key);
   @override
-  State<GlobalCategoriesScreen> createState() => _GlobalCategoriesScreenState();
+  State<CentreCategoriesScreen> createState() => _CentreCategoriesScreenState();
 }
 
-class _GlobalCategoriesScreenState extends State<GlobalCategoriesScreen> {
+class _CentreCategoriesScreenState extends State<CentreCategoriesScreen> {
   // getCentreEarningsFromDatabase() {
   //   FirebaseFirestore.instance
   //       .collection("Centres")
@@ -67,28 +68,27 @@ class _GlobalCategoriesScreenState extends State<GlobalCategoriesScreen> {
   //   pushNotificationsSystem.generateDeviceRecognitionToken();
   //   getCentreEarningsFromDatabase();
   // }
-  saveObjectCategoryInfo() {
-    FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
-        .collection("ObjectCategories")
-        .doc(widget.model!.categoryId)
-        .set({
-      "categoryId": widget.model!.categoryId.toString(),
-      "centreUID": sharedPreferences!.getString("uid"),
-      "categoryInfo": widget.model!.categoryInfo.toString(),
-      "categoryName": widget.model!.categoryName.toString(),
-      "publishDate": widget.model!.publishDate.toString(),
-      "status": "available",
-      "thumbnailUrl": widget.model!.thumbnailUrl.toString(),
-    });
-    // setState(() {
-    //   uploading = false;
-    //   categoryUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
-    // });
-    // Navigator.push(context,
-    //     MaterialPageRoute(builder: ((context) => HomeScreenForCentre())));
-  }
+  // saveObjectCategoryInfo() {
+  //   FirebaseFirestore.instance
+  //       .collection("Centres")
+  //       .doc(sharedPreferences!.getString("uid"))
+  //       .collection("ObjectCategories")
+  //       .doc(widget.model!.categoryId)
+  //       .set({
+  //     "categoryId": widget.model!.categoryId.toString(),
+  //     // "centreUID": sharedPreferences!.getString("uid"),
+  //     "categoryInfo": widget.model!.categoryInfo.toString(),
+  //     "categoryName": widget.model!.categoryName.toString(),
+  //     "publishDate": DateTime.now(),
+  //     "status": "available",
+  //     "thumbnailUrl": widget.model!.thumbnailUrl.toString(),
+  //   });
+  // setState(() {
+  //   uploading = false;
+  //   categoryUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
+  // });
+  // Navigator.push(context,
+  //     MaterialPageRoute(builder: ((context) => HomeScreenForCentre())));
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +140,8 @@ class _GlobalCategoriesScreenState extends State<GlobalCategoriesScreen> {
           //design widget
           StreamBuilder(
             stream: FirebaseFirestore.instance
-                // .collection("Centres")
-                // .doc(sharedPreferences!.getString("uid"))
+                .collection("Centres")
+                .doc(sharedPreferences!.getString("uid"))
                 .collection("ObjectCategories")
                 .orderBy("publishDate", descending: true)
                 .snapshots(),
@@ -157,7 +157,7 @@ class _GlobalCategoriesScreenState extends State<GlobalCategoriesScreen> {
                       dataSnapshot.data.docs[index].data()
                           as Map<String, dynamic>,
                     );
-                    return CategoriesUiDesignWidget(
+                    return CentreCategoriesUiDesignWidget(
                       model: categoriesModel,
                       context: context,
                     );

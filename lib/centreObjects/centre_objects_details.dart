@@ -9,65 +9,22 @@ import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/models/objects.dart';
 import 'package:skiome_centres/splashScreen/my_splash_screen.dart';
 
-class ObjectsDetailsScreen extends StatefulWidget {
+class CentreObjectsDetailsScreen extends StatefulWidget {
   Objects? model;
-  ObjectsDetailsScreen({
+  CentreObjectsDetailsScreen({
     this.model,
   });
 
   @override
-  State<ObjectsDetailsScreen> createState() => _ObjectsDetailsScreenState();
+  State<CentreObjectsDetailsScreen> createState() =>
+      _ObjectsDetailsScreenState();
 }
 
-class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
-  saveObjectCategoryInfo() {
+class _ObjectsDetailsScreenState extends State<CentreObjectsDetailsScreen> {
+  deleteObject() {
     FirebaseFirestore.instance
         .collection("Centres")
         .doc(sharedPreferences!.getString("uid"))
-        .collection("ObjectCategories")
-        .doc(widget.model!.categoryId)
-        .collection("Objects")
-        .doc(widget.model!.objectId)
-        .set({
-      "objectId": widget.model!.objectId,
-      "categoryId": widget.model!.categoryId.toString(),
-      "centreUID": sharedPreferences!.getString("uid"),
-      // "centreName": sharedPreferences!.getString("name"),
-      "objectInfo": widget.model!.objectInfo.toString(),
-      "objectName": widget.model!.objectName.toString(),
-      "longDescription": widget.model!.longDescription.toString(),
-      "objectPrice": widget.model!.objectPrice.toString(),
-      "publishDate": widget.model!.publishDate.toString(),
-      "status": "available",
-      "thumbnailUrl": widget.model!.thumbnailUrl.toString(),
-    });
-    // .then((value) {
-    //   FirebaseFirestore.instance.collection("Objects").doc(objectUniqueId).set({
-    //     "objectId": objectUniqueId,
-    //     "categoryId": widget.model!.categoryId.toString(),
-    //     // "centreUID": sharedPreferences!.getString("uid"),
-    //     // "centreName": sharedPreferences!.getString("name"),
-    //     "objectInfo": objectInfoTextEditingController.text.trim(),
-    //     "objectName": objectNameTextEditingController.text.trim(),
-    //     "longDescription": objectDescriptionTextEditingController.text.trim(),
-    //     "objectPrice": objectPriceTextEditingController.text.trim(),
-    //     "publishDate": DateTime.now(),
-    //     "status": "available",
-    //     "thumbnailUrl": downloadUrlImage,
-    //   });
-    // }
-    // );
-    // setState(() {
-    //   uploading = false;
-    // });
-    // Navigator.push(context,
-    //     MaterialPageRoute(builder: ((context) => HomeScreenForCentre())));
-  }
-
-  deleteObject() {
-    FirebaseFirestore.instance
-        // .collection("Centres")
-        // .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(widget.model!.categoryId)
         .collection("Objects")
@@ -105,12 +62,12 @@ class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: (() {
-          saveObjectCategoryInfo();
-          // deleteObject();
+          // saveObjectCategoryInfo();
+          deleteObject();
         }),
-        label: const Text("Add this Object"),
+        label: const Text("Delete this Object"),
         icon: Icon(
-          Icons.add_box_outlined,
+          Icons.delete_sweep_outlined,
           color: Colors.white,
         ),
         backgroundColor: Colors.pinkAccent,

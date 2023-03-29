@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as fstorage;
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,11 +10,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skiome_centres/category_Screens/home_screen.dart';
 import 'package:skiome_centres/global/global.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 import 'package:skiome_centres/widgets/progress_bar.dart';
-import 'package:firebase_storage/firebase_storage.dart' as fstorage;
+
+import '../models/categories.dart';
 
 class UploadCategoryScreens extends StatefulWidget {
-  const UploadCategoryScreens({super.key});
+  Categories? model;
+  UploadCategoryScreens({
+    Key? key,
+    this.model,
+  }) : super(key: key);
 
   @override
   State<UploadCategoryScreens> createState() => _UploadCategoryScreensState();
@@ -30,8 +38,8 @@ class _UploadCategoryScreensState extends State<UploadCategoryScreens> {
   String categoryUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
   saveObjectCategoryInfo() {
     FirebaseFirestore.instance
-        // .collection("Centres")
-        // .doc(sharedPreferences!.getString("uid"))
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(categoryUniqueId)
         .set({
@@ -47,8 +55,8 @@ class _UploadCategoryScreensState extends State<UploadCategoryScreens> {
       uploading = false;
       categoryUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
     });
-    Navigator.push(
-        context, MaterialPageRoute(builder: ((context) => HomeScreen())));
+    Navigator.push(context,
+        MaterialPageRoute(builder: ((context) => HomeScreenForCentre())));
   }
 
   validateUploadForm() async {
@@ -86,8 +94,10 @@ class _UploadCategoryScreensState extends State<UploadCategoryScreens> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => HomeScreen())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => HomeScreenForCentre())));
             }),
             icon: Icon(Icons.arrow_back_rounded)),
         actions: [

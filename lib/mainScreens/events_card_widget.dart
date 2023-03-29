@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:skiome_centres/eventsScreens/events_screen.dart';
 import 'package:skiome_centres/models/objects.dart';
 import 'package:skiome_centres/models/schools.dart';
 import 'package:skiome_centres/objectsScreens/objects_details_screen.dart';
@@ -21,7 +22,7 @@ class _EventsCardWidgetState extends State<EventsCardWidget> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (c) => SchoolsScreen()));
+            context, MaterialPageRoute(builder: (c) => EventsScreen()));
       },
       child: Card(
         elevation: 15,

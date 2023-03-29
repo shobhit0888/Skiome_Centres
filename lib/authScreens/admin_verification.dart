@@ -38,7 +38,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
             // FirebaseAuth.instance.signOut();
             // currentAdmin = null;
             Navigator.push(context,
-                MaterialPageRoute(builder: (c) => AdminOptionsButtons()));
+                MaterialPageRoute(builder: (c) => RegistrationTabPage()));
           } else {
             showReusableSnackBar(
                 context, "No record found, You are not an Admin");

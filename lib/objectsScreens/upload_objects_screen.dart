@@ -10,11 +10,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skiome_centres/category_Screens/home_screen.dart';
 import 'package:skiome_centres/global/global.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 import 'package:skiome_centres/models/categories.dart';
+import 'package:skiome_centres/models/objects.dart';
 import 'package:skiome_centres/widgets/progress_bar.dart';
 
 class UploadObjectsScreens extends StatefulWidget {
-  Categories? model;
+  // Categories? model;
+  Objects? model;
   UploadObjectsScreens({
     this.model,
   });
@@ -38,8 +41,8 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
   String objectUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
   saveObjectCategoryInfo() {
     FirebaseFirestore.instance
-        // .collection("Centres")
-        // .doc(sharedPreferences!.getString("uid"))
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
         .collection("ObjectCategories")
         .doc(widget.model!.categoryId)
         .collection("Objects")
@@ -56,26 +59,28 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
       "publishDate": DateTime.now(),
       "status": "available",
       "thumbnailUrl": downloadUrlImage,
-    }).then((value) {
-      FirebaseFirestore.instance.collection("Objects").doc(objectUniqueId).set({
-        "objectId": objectUniqueId,
-        "categoryId": widget.model!.categoryId.toString(),
-        // "centreUID": sharedPreferences!.getString("uid"),
-        // "centreName": sharedPreferences!.getString("name"),
-        "objectInfo": objectInfoTextEditingController.text.trim(),
-        "objectName": objectNameTextEditingController.text.trim(),
-        "longDescription": objectDescriptionTextEditingController.text.trim(),
-        "objectPrice": objectPriceTextEditingController.text.trim(),
-        "publishDate": DateTime.now(),
-        "status": "available",
-        "thumbnailUrl": downloadUrlImage,
-      });
     });
+    // .then((value) {
+    //   FirebaseFirestore.instance.collection("Objects").doc(objectUniqueId).set({
+    //     "objectId": objectUniqueId,
+    //     "categoryId": widget.model!.categoryId.toString(),
+    //     // "centreUID": sharedPreferences!.getString("uid"),
+    //     // "centreName": sharedPreferences!.getString("name"),
+    //     "objectInfo": objectInfoTextEditingController.text.trim(),
+    //     "objectName": objectNameTextEditingController.text.trim(),
+    //     "longDescription": objectDescriptionTextEditingController.text.trim(),
+    //     "objectPrice": objectPriceTextEditingController.text.trim(),
+    //     "publishDate": DateTime.now(),
+    //     "status": "available",
+    //     "thumbnailUrl": downloadUrlImage,
+    //   });
+    // }
+    // );
     setState(() {
       uploading = false;
     });
-    Navigator.push(
-        context, MaterialPageRoute(builder: ((context) => HomeScreen())));
+    Navigator.push(context,
+        MaterialPageRoute(builder: ((context) => HomeScreenForCentre())));
   }
 
   validateUploadForm() async {
@@ -115,8 +120,10 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => HomeScreen())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => HomeScreenForCentre())));
             }),
             icon: Icon(Icons.arrow_back_rounded)),
         actions: [

@@ -7,19 +7,20 @@ class Objects {
   String? objectId;
   String? categoryId;
   // String? centreName;
-  // String? centreUID;
+  String? centreUID;
   String? longDescription;
   String? objectInfo;
   String? objectName;
   String? objectPrice;
-  Timestamp? publishDate;
+  // Timestamp? publishDate;
+  String? publishDate;
   String? status;
   String? thumbnailUrl;
   Objects({
     this.objectId,
     this.categoryId,
     // this.centreName,
-    // this.centreUID,
+    this.centreUID,
     this.longDescription,
     this.objectInfo,
     this.objectName,
@@ -37,7 +38,7 @@ class Objects {
     objectInfo = json["objectInfo"];
     objectName = json["objectName"];
     objectPrice = json["objectPrice"];
-    publishDate = json["publishDate"];
+    publishDate = json["publishDate"].toString();
     status = json["status"];
     thumbnailUrl = json["thumbnailUrl"];
   }

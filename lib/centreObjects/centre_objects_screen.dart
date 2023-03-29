@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:skiome_centres/centreObjects/centre_objects_ui_design_widget.dart';
 import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/models/objects.dart';
 import 'package:skiome_centres/objectsScreens/objects_ui_design_widget.dart';
@@ -11,43 +12,21 @@ import 'package:skiome_centres/objectsScreens/upload_objects_screen.dart';
 import 'package:skiome_centres/models/categories.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../mainScreens/home_screen_for_centre.dart';
 import '../widgets/text_delegate_header_widget.dart';
 
-class ObjectsScreen extends StatefulWidget {
+class CentreObjectsScreen extends StatefulWidget {
   // Categories? model;
   Objects? model;
   Categories? categoryModel;
-  ObjectsScreen({
+  CentreObjectsScreen({
     this.categoryModel,
   });
   @override
-  State<ObjectsScreen> createState() => _ItemsScreenState();
+  State<CentreObjectsScreen> createState() => _ItemsScreenState();
 }
 
-class _ItemsScreenState extends State<ObjectsScreen> {
-  saveObjectCategoryInfo() {
-    FirebaseFirestore.instance
-        .collection("Centres")
-        .doc(sharedPreferences!.getString("uid"))
-        .collection("ObjectCategories")
-        .doc(widget.categoryModel!.categoryId)
-        .set({
-      "categoryId": widget.categoryModel!.categoryId.toString(),
-      "centreUID": sharedPreferences!.getString("uid"),
-      "categoryInfo": widget.categoryModel!.categoryInfo.toString(),
-      "categoryName": widget.categoryModel!.categoryName.toString(),
-      "publishDate": DateTime.now(),
-      "status": "available",
-      "thumbnailUrl": widget.categoryModel!.thumbnailUrl.toString(),
-    });
-    // setState(() {
-    //   uploading = false;
-    //   categoryUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
-    // });
-    Navigator.push(context,
-        MaterialPageRoute(builder: ((context) => HomeScreenForCentre())));
-  }
+class _ItemsScreenState extends State<CentreObjectsScreen> {
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -68,22 +47,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
         ),
         title: "Skiome Centres".text.bold.xl3.make(),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                saveObjectCategoryInfo();
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: ((context) => UploadObjectsScreens(
-                //               model: widget.model,
-                //             ))));
-              },
-              icon: Icon(
-                Icons.add_box_rounded,
-                color: Colors.white,
-              ))
-        ],
+        
       ),
       body: CustomScrollView(
         slivers: [
@@ -97,8 +61,8 @@ class _ItemsScreenState extends State<ObjectsScreen> {
           //3. ui design widget
           StreamBuilder(
             stream: FirebaseFirestore.instance
-                // .collection("Centres")
-                // .doc(sharedPreferences!.getString("uid"))
+                .collection("Centres")
+                .doc(sharedPreferences!.getString("uid"))
                 .collection("ObjectCategories")
                 .doc(widget.categoryModel!.categoryId)
                 .collection("Objects")
@@ -116,7 +80,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
                       dataSnapshot.data.docs[index].data()
                           as Map<String, dynamic>,
                     );
-                    return ObjectsUiDesignWidget(
+                    return CentreObjectsUiDesignWidget(
                       model: objectsModel,
                       context: context,
                     );

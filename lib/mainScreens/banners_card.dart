@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:skiome_centres/category_Screens/home_screen.dart';
+import 'package:skiome_centres/bannerScreens/banners_screen.dart';
+import 'package:skiome_centres/competitionsScreens/competitions_screen.dart';
+import 'package:skiome_centres/eventsScreens/events_screen.dart';
 import 'package:skiome_centres/models/objects.dart';
 import 'package:skiome_centres/models/schools.dart';
 import 'package:skiome_centres/objectsScreens/objects_details_screen.dart';
@@ -11,18 +13,18 @@ import 'package:skiome_centres/models/categories.dart';
 import 'package:skiome_centres/schoolsScreens/school_details.dart';
 import 'package:skiome_centres/schoolsScreens/school_screen.dart';
 
-class GlobalPoolCardWidget extends StatefulWidget {
+class BannerImagesCardWidget extends StatefulWidget {
   @override
-  State<GlobalPoolCardWidget> createState() => _GlobalPoolCardWidgetState();
+  State<BannerImagesCardWidget> createState() => _EventsCardWidgetState();
 }
 
-class _GlobalPoolCardWidgetState extends State<GlobalPoolCardWidget> {
+class _EventsCardWidgetState extends State<BannerImagesCardWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (c) => GlobalCategoriesScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => BannersScreen()));
       },
       child: Card(
         elevation: 15,
@@ -38,7 +40,7 @@ class _GlobalPoolCardWidgetState extends State<GlobalPoolCardWidget> {
                   height: 2,
                 ),
                 Text(
-                  "Global \n  Pool",
+                  "Banner Images",
                   style: TextStyle(
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold,

@@ -5,8 +5,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:skiome_centres/mainScreens/banners_card.dart';
+import 'package:skiome_centres/mainScreens/competitions_card.dart';
 import 'package:skiome_centres/mainScreens/events_card_widget.dart';
 import 'package:skiome_centres/mainScreens/global_pool_card_widget.dart';
+import 'package:skiome_centres/mainScreens/our_objects_card_widget.dart';
 import 'package:skiome_centres/mainScreens/school_card_widget.dart';
 import 'package:skiome_centres/models/schools.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -150,7 +153,10 @@ class _HomeScreenForCentreState extends State<HomeScreenForCentre> {
             SchoolCardWidget(),
             GlobalPoolCardWidget(),
             EventsCardWidget(),
-            FlutterLogo(),
+            OurObjectsCardWidget(),
+            CompetitonsCardWidget(),
+            BannerImagesCardWidget()
+            // FlutterLogo(),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 
 import '../category_Screens/home_screen.dart';
 
@@ -40,8 +41,8 @@ class StatusBanner extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (c) => HomeScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (c) => HomeScreenForCentre()));
               },
               child: Icon(
                 Icons.arrow_back,

@@ -4,37 +4,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:skiome_centres/centreObjects/centre_objects_screen.dart';
 import 'package:skiome_centres/objectsScreens/objects_screen.dart';
 import 'package:skiome_centres/models/categories.dart';
 import 'package:skiome_centres/splashScreen/my_splash_screen.dart';
 
 import '../global/global.dart';
 
-class CategoriesUiDesignWidget extends StatefulWidget {
+class CentreCategoriesUiDesignWidget extends StatefulWidget {
   Categories? model;
   BuildContext? context;
-  CategoriesUiDesignWidget({
+  CentreCategoriesUiDesignWidget({
     this.model,
     this.context,
   });
 
   @override
-  State<CategoriesUiDesignWidget> createState() =>
-      _CategoriesUiDesignWidgetState();
+  State<CentreCategoriesUiDesignWidget> createState() =>
+      _CentreCategoriesUiDesignWidgetState();
 }
 
-class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
-  // deleteCategory(String categoryId) {
-  //   FirebaseFirestore.instance
-  //       // .collection("Centres")
-  //       // .doc(sharedPreferences!.getString("uid"))
-  //       .collection("ObjectCategories")
-  //       .doc(categoryId)
-  //       .delete();
-  //   Fluttertoast.showToast(msg: "Category Deleted.");
-  //   Navigator.push(
-  //       context, MaterialPageRoute(builder: (c) => MySplashScreen()));
-  // }
+class _CentreCategoriesUiDesignWidgetState
+    extends State<CentreCategoriesUiDesignWidget> {
+  deleteCategory(String categoryId) {
+    FirebaseFirestore.instance
+        .collection("Centres")
+        .doc(sharedPreferences!.getString("uid"))
+        .collection("ObjectCategories")
+        .doc(categoryId)
+        .delete();
+    Fluttertoast.showToast(msg: "Category Deleted.");
+    Navigator.push(
+        context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (c) => ObjectsScreen(
+                builder: (c) => CentreObjectsScreen(
                       categoryModel: widget.model,
                     )));
       },
@@ -77,14 +79,14 @@ class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
                         letterSpacing: 3,
                       ),
                     ),
-                    // IconButton(
-                    //     onPressed: (() {
-                    //       deleteCategory(widget.model!.categoryId.toString());
-                    //     }),
-                    //     icon: Icon(
-                    //       Icons.delete_sweep,
-                    //       color: Colors.pinkAccent,
-                    //     ))
+                    IconButton(
+                        onPressed: (() {
+                          deleteCategory(widget.model!.categoryId.toString());
+                        }),
+                        icon: Icon(
+                          Icons.delete_sweep,
+                          color: Colors.pinkAccent,
+                        ))
                   ],
                 )
               ],

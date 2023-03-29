@@ -5,15 +5,16 @@ class Categories {
   String? categoryId;
   String? categoryInfo;
   String? categoryName;
-  // String? centreUID;
-  Timestamp? publishDate;
+  String? centreUID;
+  // Timestamp? publishDate;
+  String? publishDate;
   String? status;
   String? thumbnailUrl;
   Categories({
     this.categoryId,
     this.categoryInfo,
     this.categoryName,
-    // this.centreUID,
+    this.centreUID,
     this.publishDate,
     this.status,
     this.thumbnailUrl,
@@ -22,8 +23,8 @@ class Categories {
     categoryId = json["categoryId"];
     categoryInfo = json["categoryInfo"];
     categoryName = json["categoryName"];
-    // centreUID = json["centreUID"];
-    publishDate = json["publishDate"];
+    centreUID = json["centreUID"];
+    publishDate = json["publishDate"].toString();
     status = json["status"];
     thumbnailUrl = json["thumbnailUrl"];
   }

@@ -16,24 +16,28 @@ import '../global/global.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/loading_dialog.dart';
 
-class SchoolsRegistrationTabPage extends StatefulWidget {
-  const SchoolsRegistrationTabPage({super.key});
+class CompetitionRegistrationPage extends StatefulWidget {
+  const CompetitionRegistrationPage({super.key});
 
   @override
-  State<SchoolsRegistrationTabPage> createState() =>
-      _SchoolsRegistrationTabPageState();
+  State<CompetitionRegistrationPage> createState() =>
+      _EventsRegistrationPageState();
 }
 
-class _SchoolsRegistrationTabPageState
-    extends State<SchoolsRegistrationTabPage> {
+class _EventsRegistrationPageState extends State<CompetitionRegistrationPage> {
   TextEditingController nameTextEditingController = TextEditingController();
+  TextEditingController timeTextEditingController = TextEditingController();
+  TextEditingController venueTextEditingController = TextEditingController();
+  TextEditingController organiserTextEditingController =
+      TextEditingController();
+  TextEditingController descriptionTextEditingController =
+      TextEditingController();
+  TextEditingController registrationTextEditingController =
+      TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController passwordTextEditingController = TextEditingController();
-  TextEditingController confirmPasswordTextEditingController =
+  TextEditingController phoneNumberTextEditingController =
       TextEditingController();
-  TextEditingController cityCodeTextEditingController = TextEditingController();
-  TextEditingController schoolAddressTextEditingController =
-      TextEditingController();
+  TextEditingController openForTextEditingController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String dowmloadUrlImage = "";
   XFile? imgXFile;
@@ -49,97 +53,95 @@ class _SchoolsRegistrationTabPageState
     if (imgXFile == null) {
       Fluttertoast.showToast(msg: "Please select an image");
     } else {
-      if (passwordTextEditingController.text ==
-          confirmPasswordTextEditingController.text) {
-        if (nameTextEditingController.text.isNotEmpty &&
-            emailTextEditingController.text.isNotEmpty &&
-            passwordTextEditingController.text.isNotEmpty &&
-            confirmPasswordTextEditingController.text.isNotEmpty &&
-            cityCodeTextEditingController.text.isNotEmpty) {
-          showDialog(
-              context: context,
-              builder: (c) {
-                return LoadingDialogWidget(
-                  meassage: "Registering your Account",
-                );
-              });
-          //UPLOAD IMAGE TO STORAGE
-          String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-          fstorage.Reference storageRef = fstorage.FirebaseStorage.instance
-              .ref()
-              .child("usersImage")
-              .child(fileName);
-          fstorage.UploadTask uploadImageTask =
-              storageRef.putFile(File(imgXFile!.path));
-          fstorage.TaskSnapshot taskSnapshot =
-              await uploadImageTask.whenComplete(() {});
-          await taskSnapshot.ref.getDownloadURL().then((urlImage) {
-            dowmloadUrlImage = urlImage;
-          });
-          //save user info to firestore database
-          saveInformationToDatabase();
-        } else {
-          Navigator.pop(context);
-          Fluttertoast.showToast(
-              msg: "Please complete the form.Do not leave anything empty");
-        }
+      if (nameTextEditingController.text.isNotEmpty &&
+          timeTextEditingController.text.isNotEmpty &&
+          venueTextEditingController.text.isNotEmpty &&
+          openForTextEditingController.text.isNotEmpty &&
+          organiserTextEditingController.text.isNotEmpty &&
+          descriptionTextEditingController.text.isNotEmpty &&
+          registrationTextEditingController.text.isNotEmpty &&
+          emailTextEditingController.text.isNotEmpty &&
+          phoneNumberTextEditingController.text.isNotEmpty) {
+        showDialog(
+            context: context,
+            builder: (c) {
+              return LoadingDialogWidget(
+                meassage: "Registering new Event",
+              );
+            });
+        //UPLOAD IMAGE TO STORAGE
+        String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+        fstorage.Reference storageRef = fstorage.FirebaseStorage.instance
+            .ref()
+            .child("competitionsImages")
+            .child(fileName);
+        fstorage.UploadTask uploadImageTask =
+            storageRef.putFile(File(imgXFile!.path));
+        fstorage.TaskSnapshot taskSnapshot =
+            await uploadImageTask.whenComplete(() {});
+        await taskSnapshot.ref.getDownloadURL().then((urlImage) {
+          dowmloadUrlImage = urlImage;
+        });
+        //save user info to firestore database
+        saveInfoToFirestoreAndLocally();
       } else {
+        Navigator.pop(context);
         Fluttertoast.showToast(
-            msg: "Password and Confirm Password do not match");
+            msg: "Please complete the form.Do not leave anything empty");
       }
     }
   }
 
-  saveInformationToDatabase() async {
-//authenticate the user
-    User? currentUser;
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: emailTextEditingController.text.trim(),
-            password: passwordTextEditingController.text.trim())
-        .then((auth) {
-      currentUser = auth.user;
-    }).catchError((errorMessage) {
-      Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error Occured: \n $errorMessage");
-    });
-    if (currentUser != null) {
-      //save info to database and save locally
-      saveInfoToFirestoreAndLocally(currentUser!);
-    }
-  }
+//   saveInformationToDatabase() async {
+// //authenticate the user
+//     User? currentUser;
 
-  saveInfoToFirestoreAndLocally(User currentUser) async {
+//     if (currentUser != null) {
+//       //save info to database and save locally
+//       saveInfoToFirestoreAndLocally(currentUser);
+//     }
+//   }
+
+  saveInfoToFirestoreAndLocally() async {
+    String eventUniqueUID = DateTime.now().millisecondsSinceEpoch.toString();
     //save to firestore
     FirebaseFirestore.instance
         .collection("Centres")
         .doc(sharedPreferences!.getString("uid"))
-        .collection("UsersSchools")
-        .doc(currentUser.uid)
+        .collection("Competitions")
+        .doc(eventUniqueUID)
         .set({
-      "schoolUID": currentUser.uid,
-      "schoolEmail": currentUser.email,
-      "schoolName": nameTextEditingController.text.trim(),
+      "eventUID": eventUniqueUID,
+      "eventName": nameTextEditingController.text.trim(),
+      "time": timeTextEditingController.text.trim(),
+      "venue": venueTextEditingController.text.trim(),
+      "openFor": openForTextEditingController.text.trim(),
+      "description": descriptionTextEditingController.text.trim(),
+      "registration": registrationTextEditingController.text.trim(),
+      "email": emailTextEditingController.text.trim(),
+      "phoneNumber": phoneNumberTextEditingController.text.trim(),
       "photoUrl": dowmloadUrlImage,
       "centreUID": sharedPreferences!.getString("uid"),
-      "ciyCode": cityCodeTextEditingController.text.trim(),
-      "schoolAddress": schoolAddressTextEditingController.text.trim(),
-      "status": "approved",
-      "userCart": ["initialValue"],
+      // "ciyCode": cityCodeTextEditingController.text.trim(),
+      // "schoolAddress": schoolAddressTextEditingController.text.trim(),
+      // "status": "approved",
+      // "userCart": ["initialValue"],
     }).then((value) {
       FirebaseFirestore.instance
-          .collection("UsersSchools")
-          .doc(currentUser.uid)
+          .collection("Competitions")
+          .doc(eventUniqueUID)
           .set({
-        "uid": currentUser.uid,
-        "email": currentUser.email,
-        "name": nameTextEditingController.text.trim(),
+        "eventUID": eventUniqueUID,
+        "eventName": nameTextEditingController.text.trim(),
+        "time": timeTextEditingController.text.trim(),
+        "venue": venueTextEditingController.text.trim(),
+        "openFor": openForTextEditingController.text.trim(),
+        "description": descriptionTextEditingController.text.trim(),
+        "registration": registrationTextEditingController.text.trim(),
+        "email": emailTextEditingController.text.trim(),
+        "phoneNumber": phoneNumberTextEditingController.text.trim(),
         "photoUrl": dowmloadUrlImage,
         "centreUID": sharedPreferences!.getString("uid"),
-        "ciyCode": cityCodeTextEditingController.text.trim(),
-        "schoolAddress": schoolAddressTextEditingController.text.trim(),
-        "status": "approved",
-        "userCart": ["initialValue"],
       });
     });
 
@@ -172,7 +174,7 @@ class _SchoolsRegistrationTabPageState
           )),
         ),
         title: Text(
-          "New School Registration",
+          "Register New Competition",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -238,44 +240,68 @@ class _SchoolsRegistrationTabPageState
                     ),
                     //email
                     CustomTextField(
+                      textEditingController: timeTextEditingController,
+                      iconData: Icons.time_to_leave_outlined,
+                      hintText: "Time",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    CustomTextField(
+                      textEditingController: venueTextEditingController,
+                      iconData: Icons.location_city,
+                      hintText: "Venue",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //School Address
+                    CustomTextField(
+                      textEditingController: openForTextEditingController,
+                      iconData: Icons.open_with_outlined,
+                      hintText: "Open For",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Organiser
+                    CustomTextField(
+                      textEditingController: organiserTextEditingController,
+                      iconData: Icons.crop_original_outlined,
+                      hintText: "Organiser",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Description
+                    CustomTextField(
+                      textEditingController: descriptionTextEditingController,
+                      iconData: Icons.description,
+                      hintText: "Description",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Registration
+                    CustomTextField(
+                      textEditingController: registrationTextEditingController,
+                      iconData: Icons.app_registration_outlined,
+                      hintText: "Registration",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //contact email
+                    CustomTextField(
                       textEditingController: emailTextEditingController,
                       iconData: Icons.email,
                       hintText: "Email",
                       isObscure: false,
                       enabled: true,
                     ),
+                    //phoneNumber
                     CustomTextField(
-                      textEditingController: cityCodeTextEditingController,
-                      iconData: Icons.email,
-                      hintText: "City Code",
+                      textEditingController: phoneNumberTextEditingController,
+                      iconData: Icons.phone,
+                      hintText: "Phone Number",
                       isObscure: false,
                       enabled: true,
                     ),
-                    //School Address
-                    CustomTextField(
-                      textEditingController: schoolAddressTextEditingController,
-                      iconData: Icons.location_city,
-                      hintText: "School Address",
-                      isObscure: false,
-                      enabled: true,
-                    ),
-                    //password
-                    CustomTextField(
-                      textEditingController: passwordTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "Password",
-                      isObscure: false,
-                      enabled: true,
-                    ),
-                    //confirm password
-                    CustomTextField(
-                      textEditingController:
-                          confirmPasswordTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "Confirm Password",
-                      isObscure: true,
-                      enabled: true,
-                    ),
+
                     const SizedBox(
                       height: 20,
                     ),

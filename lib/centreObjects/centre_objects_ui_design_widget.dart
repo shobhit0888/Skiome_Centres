@@ -2,67 +2,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:skiome_centres/category_Screens/home_screen.dart';
+import 'package:skiome_centres/centreObjects/centre_objects_details.dart';
 import 'package:skiome_centres/models/objects.dart';
-import 'package:skiome_centres/models/schools.dart';
 import 'package:skiome_centres/objectsScreens/objects_details_screen.dart';
 import 'package:skiome_centres/objectsScreens/objects_screen.dart';
 import 'package:skiome_centres/models/categories.dart';
-import 'package:skiome_centres/schoolsScreens/school_details.dart';
-import 'package:skiome_centres/schoolsScreens/school_screen.dart';
 
-class GlobalPoolCardWidget extends StatefulWidget {
+class CentreObjectsUiDesignWidget extends StatefulWidget {
+  Objects? model;
+  BuildContext? context;
+  CentreObjectsUiDesignWidget({
+    this.model,
+    this.context,
+  });
+
   @override
-  State<GlobalPoolCardWidget> createState() => _GlobalPoolCardWidgetState();
+  State<CentreObjectsUiDesignWidget> createState() =>
+      _ObjectsUiDesignWidgetState();
 }
 
-class _GlobalPoolCardWidgetState extends State<GlobalPoolCardWidget> {
+class _ObjectsUiDesignWidgetState extends State<CentreObjectsUiDesignWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (c) => GlobalCategoriesScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => CentreObjectsDetailsScreen(
+                      model: widget.model,
+                    )));
       },
       child: Card(
-        elevation: 15,
+        elevation: 10,
         shadowColor: Colors.black,
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: SizedBox(
-            height: 150,
-            width: MediaQuery.of(context).size.width * .4,
+            height: 270,
+            width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
                 const SizedBox(
                   height: 2,
                 ),
                 Text(
-                  "Global \n  Pool",
+                  widget.model!.objectName.toString(),
                   style: TextStyle(
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 20,
                     letterSpacing: 3,
                   ),
                 ),
                 const SizedBox(
                   height: 2,
                 ),
-                Image.asset(
-                  "images/splash.png",
-                  height: 130,
+                Image.network(
+                  widget.model!.thumbnailUrl.toString(),
+                  height: 220,
                   fit: BoxFit.cover,
                 ),
-
-                // Text(
-                //   widget.model!.longDescription.toString(),
-                //   style: TextStyle(
-                //     color: Colors.grey,
-                //     fontSize: 14,
-                //     letterSpacing: 3,
-                //   ),
-                // ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  widget.model!.longDescription.toString(),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                    letterSpacing: 3,
+                  ),
+                ),
               ],
             ),
           ),

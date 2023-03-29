@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:skiome_centres/ordersScreens/order_card.dart';
 
 import '../global/global.dart';
+import '../models/orders.dart';
 
 // import 'package:velocity_x/velocity_x.dart';
 
@@ -54,8 +55,12 @@ class _OrdersScreenState extends State<ShiftedParcelsScreen> {
 
             return ListView.builder(
               itemBuilder: (context, index) {
+                Orders model = Orders.fromJson(dataSnapshot.data.docs[index]
+                    .data() as Map<String, dynamic>);
                 return FutureBuilder(
                   future: FirebaseFirestore.instance
+                      .collection("ObjectCategories")
+                      .doc(model.categoryId)
                       .collection("Objects")
                       .where("objectId",
                           whereIn: cartMethods.separateOrderObjectIDs(

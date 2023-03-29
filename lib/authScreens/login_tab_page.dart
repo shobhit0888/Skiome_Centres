@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skiome_centres/global/global.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 import '../category_Screens/home_screen.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/loading_dialog.dart';
@@ -72,7 +73,7 @@ class _LoginTabPageState extends State<LoginTabPage> {
 
           //send the user to homeScreen
           Navigator.push(
-              context, MaterialPageRoute(builder: (c) => HomeScreen()));
+              context, MaterialPageRoute(builder: (c) => HomeScreenForCentre()));
         } else //status is not approved
         {
           FirebaseAuth.instance.signOut();

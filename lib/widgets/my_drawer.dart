@@ -4,6 +4,7 @@ import 'package:skiome_centres/category_Screens/home_screen.dart';
 import 'package:skiome_centres/earningsScreens/earnings_screen.dart';
 import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/historyScreens/history_Screen.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 import 'package:skiome_centres/ordersScreens/orders_screen.dart';
 import 'package:skiome_centres/shiftedParcelsScreens/shifted_parcels_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -72,8 +73,10 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: "Home".text.color(Colors.grey).make(),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (c) => HomeScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => HomeScreenForCentre()));
                   },
                 ),
                 const Divider(

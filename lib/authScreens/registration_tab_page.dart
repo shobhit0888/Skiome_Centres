@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skiome_centres/global/global.dart';
+import 'package:skiome_centres/mainScreens/home_screen_for_centre.dart';
 import 'package:skiome_centres/splashScreen/my_splash_screen.dart';
 import '../category_Screens/home_screen.dart';
 import '../widgets/custom_text_field.dart';
@@ -156,8 +157,10 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => HomeScreen())));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => HomeScreenForCentre())));
               },
               icon: Icon(
                 Icons.add,
