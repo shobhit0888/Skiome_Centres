@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:skiome_centres/achievementsScreens/achievements_screen.dart';
 import 'package:skiome_centres/category_Screens/home_screen.dart';
+import 'package:skiome_centres/clubs_Screens/clubs_screen.dart';
 import 'package:skiome_centres/global/global.dart';
 import 'package:skiome_centres/models/objects.dart';
 import 'package:skiome_centres/models/schools.dart';
@@ -60,11 +62,55 @@ class _SchoolsDetailsScreenState extends State<SchoolssDetailsScreen> {
         ),
         title: Text(widget.model!.schoolName.toString()),
       ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => AchievementsScreen(model: widget.model)));
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+            },
+            heroTag: "btn1",
+            icon: Icon(Icons.celebration_rounded),
+            label: const Text(
+              "Achievements",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          FloatingActionButton.extended(
+            onPressed: () {
+              // print("......" + widget.model!.centreUID.toString());
+              // if (widget.token == 0) {
+
+              // } else {
+              //   addObjectsToSchoolCart();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => ClubsScreen(model: widget.model)));
+              // }
+            },
+            heroTag: "btn2",
+            icon: Icon(Icons.group),
+            label: const Text("   Clubs   ", style: TextStyle(fontSize: 16)),
+          ),
+        ],
+      ),
       // floatingActionButton: FloatingActionButton.extended(
       //   onPressed: (() {
-      //     deleteObject();
-      //   }),
-      //   label: const Text("Delete this Object"),
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (c) => ClubsScreen(model: widget.model)));
+      // }),
+      //   label: const Text("Clubs"),
       //   icon: Icon(
       //     Icons.delete_sweep_outlined,
       //     color: Colors.white,
