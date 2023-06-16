@@ -53,14 +53,17 @@ class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: SizedBox(
-            height: 270,
+            height: 210,
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                Image.network(
-                  widget.model!.thumbnailUrl.toString(),
-                  height: 220,
-                  fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.network(
+                    widget.model!.thumbnailUrl.toString(),
+                    height: 150,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(
                   height: 1,
@@ -68,13 +71,17 @@ class _CategoriesUiDesignWidgetState extends State<CategoriesUiDesignWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      widget.model!.categoryName.toString(),
-                      style: TextStyle(
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        letterSpacing: 3,
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text(
+                        widget.model!.categoryName.toString(),
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          letterSpacing: 1,
+                        ),
                       ),
                     ),
                     // IconButton(

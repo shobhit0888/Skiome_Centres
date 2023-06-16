@@ -59,6 +59,9 @@ class _UploadObjectsScreensState extends State<UploadObjectsScreens> {
       "publishDate": DateTime.now(),
       "status": "available",
       "thumbnailUrl": downloadUrlImage,
+      "link": widget.model!.link,
+      // "conceptsCovered": objectConceptsCoveredTextEditingController.text.trim(),
+      // "useMethod": objectUseMethodTextEditingController.text.trim(),
     });
     // .then((value) {
     //   FirebaseFirestore.instance.collection("Objects").doc(objectUniqueId).set({

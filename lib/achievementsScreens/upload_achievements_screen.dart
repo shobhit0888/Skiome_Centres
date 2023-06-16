@@ -220,7 +220,7 @@ class _UploadCategoryScreensState extends State<UploadAchievementScreens> {
                       textEditingController:
                           competitionNameTextEditingController,
                       iconData: Icons.person,
-                      hintText: "Name",
+                      hintText: "Competition/Event Name",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -228,14 +228,14 @@ class _UploadCategoryScreensState extends State<UploadAchievementScreens> {
                     CustomTextField(
                       textEditingController: awardedByTextEditingController,
                       iconData: Icons.email,
-                      hintText: "Email",
+                      hintText: "Awarded By",
                       isObscure: false,
                       enabled: true,
                     ),
                     CustomTextField(
                       textEditingController: authorizedByTextEditingController,
                       iconData: Icons.email,
-                      hintText: "City Code",
+                      hintText: "Authorized By",
                       isObscure: false,
                       enabled: true,
                     ),

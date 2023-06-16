@@ -40,6 +40,8 @@ class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
       "publishDate": widget.model!.publishDate.toString(),
       "status": "available",
       "thumbnailUrl": widget.model!.thumbnailUrl.toString(),
+      "conceptsCovered": widget.model!.conceptsCovered.toString(),
+      "useMethod": widget.model!.useMethod.toString(),
     });
     // .then((value) {
     //   FirebaseFirestore.instance.collection("Objects").doc(objectUniqueId).set({
@@ -121,7 +123,7 @@ class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
           children: [
             Image.network(widget.model!.thumbnailUrl.toString()),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+              padding: const EdgeInsets.only(left: 18.0, top: 10.0),
               child: Text(
                 widget.model!.objectName.toString(),
                 textAlign: TextAlign.justify,
@@ -132,12 +134,46 @@ class _ObjectsDetailsScreenState extends State<ObjectsDetailsScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              padding: const EdgeInsets.only(left: 18.0, right: 28.0, top: 8.0),
               child: Text(
-                widget.model!.longDescription.toString(),
+                "Info/Content : \n" + widget.model!.objectInfo.toString(),
                 textAlign: TextAlign.justify,
                 style: const TextStyle(
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 28.0, top: 8.0),
+              child: Text(
+                "Concepts Covered : \n" +
+                    widget.model!.conceptsCovered.toString(),
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 28.0, top: 8.0),
+              child: Text(
+                "Description : \n" + widget.model!.longDescription.toString(),
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 28.0, top: 8.0),
+              child: Text(
+                "How to Use : \n " + widget.model!.useMethod.toString(),
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
                   fontSize: 15,
                 ),
               ),

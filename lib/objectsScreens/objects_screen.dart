@@ -33,6 +33,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
         .collection("ObjectCategories")
         .doc(widget.categoryModel!.categoryId)
         .set({
+      "subject": widget.categoryModel!.subject,
       "categoryId": widget.categoryModel!.categoryId.toString(),
       "centreUID": sharedPreferences!.getString("uid"),
       "categoryInfo": widget.categoryModel!.categoryInfo.toString(),

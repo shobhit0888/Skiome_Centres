@@ -34,6 +34,19 @@ class _SchoolsRegistrationTabPageState
   TextEditingController cityCodeTextEditingController = TextEditingController();
   TextEditingController schoolAddressTextEditingController =
       TextEditingController();
+  TextEditingController principalNameTextEditingController =
+      TextEditingController();
+  TextEditingController phoneNumberTextEditingController =
+      TextEditingController();
+  TextEditingController namePOCTextEditingController = TextEditingController();
+  TextEditingController phoneNumberPOCTextEditingController =
+      TextEditingController();
+  TextEditingController teachersTextEditingController = TextEditingController();
+  TextEditingController stateBoardTextEditingController =
+      TextEditingController();
+  TextEditingController studentsTextEditingController = TextEditingController();
+
+  String? board;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String dowmloadUrlImage = "";
   XFile? imgXFile;
@@ -122,8 +135,16 @@ class _SchoolsRegistrationTabPageState
       "schoolName": nameTextEditingController.text.trim(),
       "photoUrl": dowmloadUrlImage,
       "centreUID": sharedPreferences!.getString("uid"),
-      "ciyCode": cityCodeTextEditingController.text.trim(),
+      "cityCode": cityCodeTextEditingController.text.trim(),
       "schoolAddress": schoolAddressTextEditingController.text.trim(),
+      "schoolPhoneNumber": phoneNumberTextEditingController.text.trim(),
+      "principalName": principalNameTextEditingController.text.trim(),
+      "pocName": namePOCTextEditingController.text.trim(),
+      "pocPhoneNumber": phoneNumberPOCTextEditingController.text.trim(),
+      "board": board,
+      "stateBoard": stateBoardTextEditingController.text.trim(),
+      "numberOfTeachers": teachersTextEditingController.text.trim(),
+      "numberOfStudents": studentsTextEditingController.text.trim(),
       "status": "approved",
       "userCart": ["initialValue"],
     }).then((value) {
@@ -136,8 +157,16 @@ class _SchoolsRegistrationTabPageState
         "name": nameTextEditingController.text.trim(),
         "photoUrl": dowmloadUrlImage,
         "centreUID": sharedPreferences!.getString("uid"),
-        "ciyCode": cityCodeTextEditingController.text.trim(),
+        "cityCode": cityCodeTextEditingController.text.trim(),
         "schoolAddress": schoolAddressTextEditingController.text.trim(),
+        "schoolPhoneNumber": phoneNumberTextEditingController.text.trim(),
+        "principalName": principalNameTextEditingController.text.trim(),
+        "pocName": namePOCTextEditingController.text.trim(),
+        "pocPhoneNumber": phoneNumberPOCTextEditingController.text.trim(),
+        "board": board,
+        "stateBoard": stateBoardTextEditingController.text.trim(),
+        "numberOfTeachers": teachersTextEditingController.text.trim(),
+        "numberOfStudents": studentsTextEditingController.text.trim(),
         "status": "approved",
         "userCart": ["initialValue"],
       });
@@ -232,7 +261,7 @@ class _SchoolsRegistrationTabPageState
                     CustomTextField(
                       textEditingController: nameTextEditingController,
                       iconData: Icons.person,
-                      hintText: "Name",
+                      hintText: "School Name",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -240,7 +269,125 @@ class _SchoolsRegistrationTabPageState
                     CustomTextField(
                       textEditingController: emailTextEditingController,
                       iconData: Icons.email,
-                      hintText: "Email",
+                      hintText: "School Email",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //contact Number
+                    CustomTextField(
+                      textEditingController: phoneNumberTextEditingController,
+                      iconData: Icons.phone,
+                      hintText: "School Contact Number",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Principal Name
+                    CustomTextField(
+                      textEditingController: principalNameTextEditingController,
+                      iconData: Icons.person,
+                      hintText: "Principal Name",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Poc name
+                    CustomTextField(
+                      textEditingController: namePOCTextEditingController,
+                      iconData: Icons.person,
+                      hintText: "POC's Name",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //POC's contact
+                    CustomTextField(
+                      textEditingController:
+                          phoneNumberPOCTextEditingController,
+                      iconData: Icons.phone_android,
+                      hintText: "POC's PhoneNumber",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Board
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      width: MediaQuery.of(context).size.width * .85,
+                      height: MediaQuery.of(context).size.width * .15,
+                      // color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(Icons.group),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                focusColor: Colors.purpleAccent,
+                                value: board,
+                                //elevation: 5,
+                                style: TextStyle(color: Colors.grey),
+                                iconEnabledColor: Colors.black,
+                                items: <String>[
+                                  'CBSE',
+                                  'ICSE',
+                                  'State Board'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 15.5),
+                                    ),
+                                  );
+                                }).toList(),
+
+                                // icon: Icon(Icons.group),
+                                hint: Text(
+                                  "Board",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    board = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    CustomTextField(
+                      textEditingController: stateBoardTextEditingController,
+                      iconData: Icons.email,
+                      hintText: "If state board, then give name",
+                      isObscure: false,
+                      enabled: board == "State Board" ? true : false,
+                    ),
+                    //Number of teachers
+                    CustomTextField(
+                      textEditingController: teachersTextEditingController,
+                      iconData: Icons.email,
+                      hintText: "Number of teachers",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //Number of students
+                    CustomTextField(
+                      textEditingController: studentsTextEditingController,
+                      iconData: Icons.email,
+                      hintText: "Number Of students",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -251,6 +398,7 @@ class _SchoolsRegistrationTabPageState
                       isObscure: false,
                       enabled: true,
                     ),
+
                     //School Address
                     CustomTextField(
                       textEditingController: schoolAddressTextEditingController,

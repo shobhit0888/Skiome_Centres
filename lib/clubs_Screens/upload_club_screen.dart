@@ -158,7 +158,7 @@ class _UploadCategoryScreensState extends State<UploadClubScreens> {
           )),
         ),
         title: Text(
-          "New School Registration",
+          "New Club Registration",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -226,22 +226,22 @@ class _UploadCategoryScreensState extends State<UploadClubScreens> {
                     CustomTextField(
                       textEditingController: taglineTextEditingController,
                       iconData: Icons.email,
-                      hintText: "Email",
+                      hintText: "Tagline",
                       isObscure: false,
                       enabled: true,
                     ),
                     CustomTextField(
                       textEditingController: objectiveTextEditingController,
                       iconData: Icons.email,
-                      hintText: "City Code",
+                      hintText: "Objective",
                       isObscure: false,
                       enabled: true,
                     ),
                     //School Address
                     CustomTextField(
                       textEditingController: clubInfoTextEditingController,
-                      iconData: Icons.location_city,
-                      hintText: "School Address",
+                      iconData: Icons.abc_outlined,
+                      hintText: "Club Info",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -296,7 +296,7 @@ class _UploadCategoryScreensState extends State<UploadClubScreens> {
 
                                 // icon: Icon(Icons.group),
                                 hint: Text(
-                                  "Board",
+                                  "Club Category",
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 16,

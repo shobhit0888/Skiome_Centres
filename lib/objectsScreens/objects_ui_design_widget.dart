@@ -37,7 +37,7 @@ class _ObjectsUiDesignWidgetState extends State<ObjectsUiDesignWidget> {
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: SizedBox(
-            height: 270,
+            height: 190,
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
@@ -49,8 +49,8 @@ class _ObjectsUiDesignWidgetState extends State<ObjectsUiDesignWidget> {
                   style: TextStyle(
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    letterSpacing: 3,
+                    fontSize: 16,
+                    letterSpacing: 1,
                   ),
                 ),
                 const SizedBox(
@@ -58,20 +58,20 @@ class _ObjectsUiDesignWidgetState extends State<ObjectsUiDesignWidget> {
                 ),
                 Image.network(
                   widget.model!.thumbnailUrl.toString(),
-                  height: 220,
+                  height: 150,
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Text(
-                  widget.model!.longDescription.toString(),
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    letterSpacing: 3,
-                  ),
-                ),
+                // Text(
+                //   widget.model!.longDescription.toString(),
+                //   style: TextStyle(
+                //     color: Colors.grey,
+                //     fontSize: 14,
+                //     letterSpacing: 3,
+                //   ),
+                // ),
               ],
             ),
           ),

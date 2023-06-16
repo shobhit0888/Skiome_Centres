@@ -170,7 +170,7 @@ class _EventsRegistrationPageState extends State<EventRegistrationPage> {
           )),
         ),
         title: Text(
-          "New School Registration",
+          "New Event Registration",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

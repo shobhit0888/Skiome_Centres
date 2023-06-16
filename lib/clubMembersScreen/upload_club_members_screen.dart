@@ -93,7 +93,7 @@ class _UploadCategoryScreensState extends State<UploadClubMembersScreens> {
         // "tagline": taglineTextEditingController.text.trim(),
         // "objective": objectiveTextEditingController.text.trim(),
         "publishDate": DateTime.now(),
-        
+
         "photoUrl": downloadUrlImage,
         "category": widget.model!.category,
         "categoryUID": widget.model!.category,
@@ -234,7 +234,7 @@ class _UploadCategoryScreensState extends State<UploadClubMembersScreens> {
                     CustomTextField(
                       textEditingController: nameTextEditingController,
                       iconData: Icons.person,
-                      hintText: "Name",
+                      hintText: "Member's Name",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -302,7 +302,7 @@ class _UploadCategoryScreensState extends State<UploadClubMembersScreens> {
 
                                 // icon: Icon(Icons.group),
                                 hint: Text(
-                                  "Board",
+                                  "Post",
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 16,

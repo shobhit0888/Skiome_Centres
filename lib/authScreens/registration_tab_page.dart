@@ -220,7 +220,7 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                     CustomTextField(
                       textEditingController: nameTextEditingController,
                       iconData: Icons.person,
-                      hintText: "Name",
+                      hintText: "Centre Name",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -229,6 +229,28 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                       textEditingController: emailTextEditingController,
                       iconData: Icons.email,
                       hintText: "Email",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    CustomTextField(
+                      textEditingController: phoneTextEditingController,
+                      iconData: Icons.lock,
+                      hintText: "Phone No.",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    CustomTextField(
+                      textEditingController: cityCodeTextEditingController,
+                      iconData: Icons.lock,
+                      hintText: "City Code",
+                      isObscure: false,
+                      enabled: true,
+                    ),
+                    //location
+                    CustomTextField(
+                      textEditingController: locationTextEditingController,
+                      iconData: Icons.lock,
+                      hintText: "Location",
                       isObscure: false,
                       enabled: true,
                     ),
@@ -250,13 +272,7 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                       enabled: true,
                     ),
                     //phone
-                    CustomTextField(
-                      textEditingController: phoneTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "Phone No.",
-                      isObscure: false,
-                      enabled: true,
-                    ),
+
                     //centreCode
                     // CustomTextField(
                     //   textEditingController: centreCodeTextEditingController,
@@ -266,21 +282,7 @@ class _RegistrationTabPageState extends State<RegistrationTabPage> {
                     //   enabled: true,
                     // ),
                     //cityCode
-                    CustomTextField(
-                      textEditingController: cityCodeTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "City Code",
-                      isObscure: false,
-                      enabled: true,
-                    ),
-                    //location
-                    CustomTextField(
-                      textEditingController: locationTextEditingController,
-                      iconData: Icons.lock,
-                      hintText: "Location",
-                      isObscure: false,
-                      enabled: true,
-                    ),
+
                     const SizedBox(
                       height: 20,
                     ),

@@ -16,6 +16,9 @@ class Objects {
   String? publishDate;
   String? status;
   String? thumbnailUrl;
+  String? conceptsCovered;
+  String? useMethod;
+  String? link;
   Objects({
     this.objectId,
     this.categoryId,
@@ -28,6 +31,9 @@ class Objects {
     this.publishDate,
     this.status,
     this.thumbnailUrl,
+    this.conceptsCovered,
+    this.useMethod,
+    this.link,
   });
   Objects.fromJson(Map<String, dynamic> json) {
     objectId = json["objectId"];
@@ -41,5 +47,8 @@ class Objects {
     publishDate = json["publishDate"].toString();
     status = json["status"];
     thumbnailUrl = json["thumbnailUrl"];
+    conceptsCovered = json["conceptsCovered"];
+    useMethod = json["useMethod"];
+    link = json["link"];
   }
 }

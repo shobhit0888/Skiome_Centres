@@ -10,6 +10,7 @@ class Categories {
   String? publishDate;
   String? status;
   String? thumbnailUrl;
+  String? subject;
   Categories({
     this.categoryId,
     this.categoryInfo,
@@ -18,6 +19,7 @@ class Categories {
     this.publishDate,
     this.status,
     this.thumbnailUrl,
+    this.subject,
   });
   Categories.fromJson(Map<String, dynamic> json) {
     categoryId = json["categoryId"];
@@ -27,5 +29,6 @@ class Categories {
     publishDate = json["publishDate"].toString();
     status = json["status"];
     thumbnailUrl = json["thumbnailUrl"];
+    subject = json["subject"];
   }
 }
