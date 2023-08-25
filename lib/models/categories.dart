@@ -11,6 +11,7 @@ class Categories {
   String? status;
   String? thumbnailUrl;
   String? subject;
+  String? standard;
   Categories({
     this.categoryId,
     this.categoryInfo,
@@ -20,6 +21,7 @@ class Categories {
     this.status,
     this.thumbnailUrl,
     this.subject,
+    this.standard,
   });
   Categories.fromJson(Map<String, dynamic> json) {
     categoryId = json["categoryId"];
@@ -30,5 +32,6 @@ class Categories {
     status = json["status"];
     thumbnailUrl = json["thumbnailUrl"];
     subject = json["subject"];
+    standard = json["standard"];
   }
 }

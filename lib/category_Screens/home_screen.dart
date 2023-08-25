@@ -21,7 +21,7 @@ import '../widgets/my_drawer.dart';
 
 class GlobalCategoriesScreen extends StatefulWidget {
   Categories? model;
-  GlobalCategoriesScreen({
+    GlobalCategoriesScreen({
     Key? key,
     this.model,
   }) : super(key: key);
@@ -79,6 +79,8 @@ class _GlobalCategoriesScreenState extends State<GlobalCategoriesScreen> {
       "categoryInfo": widget.model!.categoryInfo.toString(),
       "categoryName": widget.model!.categoryName.toString(),
       "publishDate": widget.model!.publishDate.toString(),
+      "subject": widget.model!.subject.toString(),
+      "standard": widget.model!.standard.toString(),
       "status": "available",
       "thumbnailUrl": widget.model!.thumbnailUrl.toString(),
     });

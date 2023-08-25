@@ -40,6 +40,7 @@ class _ItemsScreenState extends State<ObjectsScreen> {
       "categoryName": widget.categoryModel!.categoryName.toString(),
       "publishDate": DateTime.now(),
       "status": "available",
+      "standard":widget.categoryModel!.standard.toString(),
       "thumbnailUrl": widget.categoryModel!.thumbnailUrl.toString(),
     });
     // setState(() {
